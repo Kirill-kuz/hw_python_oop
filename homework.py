@@ -39,7 +39,6 @@ class Training:
         # преодолённая_дистанция_за_тренировку / время_тренировки
         mean_speed = self.get_distance() / self.duration
         return mean_speed
-        
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
