@@ -74,6 +74,7 @@ class SportsWalking(Training):
     COEF35: float = 0.035
     COEF29: float = 0.029
     M_V_S: float = 0.278
+    S_V_M: int = 100
 
     def __init__(self, action: int, duration: float,
                  weight: float, heght: float) -> None:
@@ -83,7 +84,7 @@ class SportsWalking(Training):
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         spent_calories = ((self.COEF35 * self.weight
-                          + (self.get_mean_speed() ** 2 // self.heght)
+                          + (self.get_mean_speed() ** 2 // self.heght / self.S_V_M)
                           * self.COEF29
                           * self.weight) * self.duration * self.HOUR_M)
         return spent_calories
