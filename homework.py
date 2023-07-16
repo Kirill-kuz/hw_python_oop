@@ -9,14 +9,11 @@ class InfoMessage:
         self.calories = calories
 
     def get_message(self) -> str:
-        INFO_MESSAGE: str = (f'Тип тренировки: {self.training_type}; '
-                             f'Длительность: {self.duration} ч.; '
-                             f'Дистанция: {self.distance:.3f} км; '
-                             f'Ср. скорость: {self.speed:.3f} км/ч; '
-                             f'Потрачено ккал: {self.calories:.3f}.')
-        return str(INFO_MESSAGE.format(self.training_type, self.duration,
-                                       self.distance, self.speed,
-                                       self.calories))
+        return (f'Тип тренировки: {self.training_type}; '
+                f'Длительность: {self.duration:.3f} ч.; '
+                f'Дистанция: {self.distance:.3f} км; '
+                f'Ср. скорость: {self.speed:.3f} км/ч; '
+                f'Потрачено ккал: {self.calories:.3f}.')
 
 
 class Training:
@@ -75,17 +72,18 @@ class SportsWalking(Training):
     COEF29: float = 0.029
     M_V_S: float = 0.278
     S_V_M: int = 100
+    HOUR_M: int = 60
 
     def __init__(self, action: int, duration: float,
-                 weight: float, heght: float) -> None:
-        self.heght = heght
+                 weight: float, height: float) -> None:
+        self.height = height
         super().__init__(action, duration, weight)
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         spent_calories = ((self.COEF35 * self.weight
-                          + (self.get_mean_speed() ** 2 // self.heght
-                             / self.S_V_M)
+                          + ((self.get_mean_speed() * self.M_V_S) ** 2
+                             / (self.height / self.S_V_M))
                           * self.COEF29
                           * self.weight) * self.duration * self.HOUR_M)
         return spent_calories
