@@ -22,6 +22,7 @@ class Training:
 
     LEN_STEP: float = 0.65
     M_IN_KM: int = 1000
+    HOUR_M: int = 60
 
     def __init__(self, action: int, duration: float, weight: float) -> None:
         self.action = action
@@ -38,6 +39,7 @@ class Training:
         # преодолённая_дистанция_за_тренировку / время_тренировки
         mean_speed = self.get_distance() / self.duration
         return mean_speed
+        
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
@@ -62,7 +64,7 @@ class Running(Training):
                           * self.get_mean_speed()
                           + self.CALORIES_MEAN_SPEED_SHIFT)
                           * self.weight / self.M_IN_KM
-                          * self.duration * 60)
+                          * self.duration * self.HOUR_M)
         return spent_calories
 
 
@@ -78,9 +80,10 @@ class SportsWalking(Training):
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        spent_calories = ((self.COEF35 * self.weight + ((self.get_mean_speed())
-                           ** 2 / (self.heght)) * self.COEF29
-                           * self.weight) * self.duration * 60)
+        spent_calories = ((self.COEF35 * self.weight
+                          + (self.get_mean_speed() ** 2 // self.heght)
+                          * self.COEF29
+                          * self.weight) * self.duration * self.HOUR_M)
         return spent_calories
 
 
@@ -88,6 +91,7 @@ class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP: float = 1.38
     M_IN_KM: int = 1000
+    SPEED_V: float = 1.1
 
     def __init__(self, action, duration, weight,
                  length_pool, count_pool) -> None:
@@ -102,7 +106,7 @@ class Swimming(Training):
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        spent_calories = ((self.get_mean_speed() + 1.1)
+        spent_calories = ((self.get_mean_speed() + self.SPEED_V)
                           * 2 * self.weight * self.duration)
         return spent_calories
 
