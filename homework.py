@@ -15,7 +15,8 @@ class InfoMessage:
                              f'Ср. скорость: {self.speed:.3f} км/ч; '
                              f'Потрачено ккал: {self.calories:.3f}.')
         return str(INFO_MESSAGE.format(self.training_type, self.duration,
-                                   self.distance, self.speed, self.calories))
+                                       self.distance, self.speed,
+                                       self.calories))
 
 
 class Training:
